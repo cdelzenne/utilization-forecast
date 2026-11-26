@@ -1,0 +1,27 @@
+id,opp,client,bu,office,stage,probability,start_week,weeks,fte,titles,certs
+OPP-001,Server-side tagging migration,Gaming L,fifty-five,Shenzhen,Scoping,0.4,2026-12-14,4,3,Sr Data Architect|Senior Consultant|Data Scientist|Cloud Specialist,Piano
+OPP-002,Salesforce Data Cloud activation,Gaming L,fifty-five,Shenzhen,Qualified,0.25,2026-12-14,4,2.5,Measurement Specialist|Consulting Manager|Sr Data Architect|Sr Cloud Specialist,Salesforce
+OPP-003,CDP composable build,Retailer G,Jellyfish,Singapore,Shortlisted,0.6,2026-11-30,8,2,Cloud Specialist|Sr Cloud Specialist|Project Lead|Data Scientist,Salesforce|Google Cloud
+OPP-004,Data governance audit,Auto OEM F,fifty-five,Shenzhen,Shortlisted,0.6,2026-12-28,6,1,Data Scientist|Consultant|Sr Data Scientist|Cloud Specialist,OneTrust
+OPP-005,CDP composable build,Cosmetics group B,Jellyfish,Singapore,Proposal,0.5,2026-12-14,12,2.5,Sr Data Eng|Measurement Specialist,Salesforce|Google Cloud
+OPP-006,Clean-room analytics (ADH/AMC),E-commerce K,Jellyfish,Tokyo,Qualified,0.25,2026-11-16,4,4,Data Scientist|Senior Consultant|Sr Data Scientist,LiveRamp|Google Marketing Platform
+OPP-007,Data platform on GCP,Telco C,fifty-five,Shanghai,Qualified,0.25,2026-11-30,4,3,Data Architect|Cloud Specialist|Sr Data Architect|Sr Data Scientist,Google Cloud
+OPP-008,Data platform on GCP,Cosmetics group B,fifty-five,Singapore,Qualified,0.25,2026-11-23,6,1.5,Sr Data Scientist|Project Lead,Google Cloud
+OPP-009,Data platform on GCP,Beverage M,fifty-five,Hong Kong,Scoping,0.4,2026-11-30,4,2.5,Sr Data Eng|Consultant,Google Cloud
+OPP-010,Clean-room analytics (ADH/AMC),Retailer G,Jellyfish,Hong Kong,Shortlisted,0.6,2026-11-23,8,1.5,Data Architect|Sr Data Architect|Sr Cloud Specialist|Project Lead,LiveRamp|Google Marketing Platform
+OPP-011,Data platform on GCP,CPG H,fifty-five,Hong Kong,Shortlisted,0.6,2026-12-07,8,1,Data Eng|Senior Consultant|Sr Data Eng|Sr Cloud Specialist,Google Cloud
+OPP-012,Azure lakehouse build,Electronics N,fifty-five,Shanghai,Proposal,0.5,2026-11-16,12,1,Consulting Manager|Cloud Specialist|Sr Cloud Specialist,Azure
+OPP-013,GenAI product-feed enrichment,Luxury maison A,Jellyfish,Bangkok,Shortlisted,0.6,2026-12-21,6,2,Sr Measurement Specialist|Measurement Specialist|Consultant|Data Eng,AB Tasty
+OPP-014,Salesforce Data Cloud activation,Airline I,fifty-five,Singapore,Scoping,0.4,2026-11-23,6,3,Data Architect|Cloud Specialist,Salesforce
+OPP-015,Clean-room analytics (ADH/AMC),Insurer E,fifty-five,Shanghai,Scoping,0.4,2026-12-28,8,1.5,Data Eng|Project Lead|Senior Consultant,LiveRamp|Google Marketing Platform
+OPP-016,Agentic tracking pilot,Auto OEM F,Jellyfish,Jakarta,Proposal,0.5,2026-11-23,6,3,Data Scientist|Senior Consultant,Adobe
+OPP-017,Server-side tagging migration,Cosmetics group B,Jellyfish,Tokyo,Shortlisted,0.6,2026-11-16,12,1.5,Sr Cloud Specialist|Consultant|Cloud Specialist|Sr Measurement Specialist,Google Marketing Platform
+OPP-018,Agentic tracking pilot,Auto OEM F,fifty-five,Hong Kong,Scoping,0.4,2026-12-28,6,3,Sr Data Scientist|Sr Data Architect,Power BI
+OPP-019,MMM refresh (Meridian),Electronics N,fifty-five,Shanghai,Scoping,0.4,2026-12-28,6,2,Consultant|Consulting Manager|Project Lead|Measurement Specialist,Google Marketing Platform
+OPP-020,CDP composable build,Gaming L,fifty-five,Singapore,Scoping,0.4,2026-12-28,8,4,Sr Measurement Specialist|Sr Data Architect|Data Scientist|Cloud Specialist,Salesforce|Google Cloud
+OPP-021,Agentic tracking pilot,Gaming L,fifty-five,Shenzhen,Qualified,0.25,2026-12-21,4,4,Consultant|Project Lead|Sr Data Scientist|Sr Data Eng,OneTrust
+OPP-022,GenAI product-feed enrichment,Electronics N,fifty-five,Shanghai,Verbal,0.75,2026-11-30,8,1,Cloud Specialist|Measurement Specialist|Project Lead|Senior Consultant,Azure
+OPP-023,CRO retainer,Airline I,Jellyfish,Shanghai,Qualified,0.25,2026-12-21,4,2,Data Scientist|Senior Consultant,OneTrust
+OPP-024,Salesforce Data Cloud activation,Retailer G,fifty-five,Hong Kong,Shortlisted,0.6,2026-11-16,6,4,Data Eng|Consulting Manager,Salesforce
+OPP-025,Azure lakehouse build,Telco C,fifty-five,Singapore,Shortlisted,0.6,2026-11-23,6,2,Data Scientist|Data Architect|Sr Measurement Specialist|Sr Data Eng,Azure
+OPP-026,Agentic tracking pilot,Electronics N,fifty-five,Hong Kong,Shortlisted,0.6,2026-12-14,6,2.5,Data Eng|Consultant|Data Scientist|Sr Measurement Specialist,Adobe

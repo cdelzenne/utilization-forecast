@@ -1,0 +1,1039 @@
+<meta name="dash-one-writer">
+<style>
+.bt{--bt-yellow:#FFE600;--bt-ink:#141414;font-family:"Helvetica Neue",Helvetica,Arial,var(--font-anthropic-sans),sans-serif;color:var(--color-fg);display:flex;flex-direction:column;gap:var(--cds-gap-lg)}
+.bt *{box-sizing:border-box}
+.bt-hero{background:var(--bt-yellow);color:var(--bt-ink);border-radius:var(--cds-radius);padding:var(--cds-pad-lg) var(--cds-pad-xl);display:flex;flex-direction:column;gap:var(--cds-gap-sm)}
+.bt-kicker{font-size:var(--cds-font-size-caption);letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin:0}
+.bt-title{font-size:clamp(28px,4.4vw,44px);line-height:1.02;font-weight:800;letter-spacing:-.02em;margin:0}
+.bt-lede{font-size:var(--cds-font-size-body);max-width:68ch;margin:0;line-height:1.45}
+.bt-lede b{font-weight:800;font-variant-numeric:tabular-nums}
+.bt-sample{display:inline-block;margin-top:2px;font-size:var(--cds-font-size-caption);background:var(--bt-ink);color:var(--bt-yellow);border-radius:999px;padding:2px 10px;font-weight:600;width:fit-content}
+.bt-filters{display:flex;flex-direction:column;gap:var(--cds-gap-md);background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-md) var(--cds-pad-lg)}
+.bt-frow{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.bt-flabel{font-size:var(--cds-font-size-caption);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--color-fg-muted);min-width:92px}
+.bt-chip{font:inherit;font-size:13px;border:1px solid var(--color-border-line);background:var(--color-bg);color:var(--color-fg);border-radius:999px;padding:4px 11px;cursor:pointer;line-height:1.3}
+.bt-chip:hover{border-color:var(--color-fg-muted)}
+.bt-chip[aria-pressed="true"]{background:var(--bt-yellow);border-color:var(--bt-yellow);color:var(--bt-ink);font-weight:700}
+.bt-chip:focus-visible{outline:2px solid var(--color-fg);outline-offset:2px}
+.bt-filters details>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px}
+.bt-filters details>summary::-webkit-details-marker{display:none}
+.bt-filters details>summary::after{content:"＋";font-size:12px;color:var(--color-fg-muted)}
+.bt-filters details[open]>summary::after{content:"－"}
+.bt-filters details .bt-frow{margin-top:8px;padding-left:0}
+.bt-count{font-size:12px;color:var(--color-fg-muted)}
+.bt-reset{margin-left:auto;font:inherit;font-size:13px;background:none;border:none;color:var(--color-fg-muted);text-decoration:underline;cursor:pointer}
+.bt-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:var(--cds-gap-md)}
+.bt-kpi{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-md) var(--cds-pad-lg);display:flex;flex-direction:column;gap:4px;border-top:4px solid var(--bt-yellow)}
+.bt-kpi h3{margin:0;font-size:var(--cds-font-size-caption);font-weight:700;color:var(--color-fg-muted);text-transform:uppercase;letter-spacing:.06em}
+.bt-kpi .v{font-size:34px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.05;min-height:36px}
+.bt-kpi .s{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);min-height:16px}
+.bt-good{color:var(--color-ok)}.bt-warn{color:var(--color-warn)}.bt-bad{color:var(--color-bad)}
+.bt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:var(--cds-gap-lg)}
+.bt-card{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-lg);display:flex;flex-direction:column;gap:var(--cds-gap-sm);min-width:0}
+.bt-card.wide{grid-column:1/-1}
+.bt-card h2{margin:0;font-size:var(--cds-font-size-heading);font-weight:800;letter-spacing:-.01em}
+.bt-card .sub{margin:0;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.bt-chart{position:relative;width:100%;min-height:260px}
+.bt-chart.tall{min-height:340px}
+.bt-chart svg{display:block;overflow:visible}
+.bt-chart text{font-family:inherit}
+.bt-axis text{fill:var(--cds-text-secondary);font-size:11px}
+.bt-axis path,.bt-axis line{stroke:var(--cds-chart-axis)}
+.bt-gridl line{stroke:var(--cds-chart-grid)}.bt-gridl path{display:none}
+.bt-legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--color-fg-muted)}
+.bt-legend span{display:inline-flex;align-items:center;gap:6px}
+.bt-sw{width:12px;height:12px;border-radius:2px;display:inline-block}
+.bt-sw.ink{background:var(--color-fg)}.bt-sw.yel{background:var(--bt-yellow)}
+.bt-sw.line{height:0;border-top:2px dashed var(--color-fg);border-radius:0;width:16px}
+.bt-sw.over{background:var(--color-bad)}
+.bt-tip{position:absolute;pointer-events:none;background:var(--cds-surface-popover);border:1px solid var(--cds-border);box-shadow:var(--cds-shadow-popover);border-radius:8px;padding:8px 10px;font-size:12px;line-height:1.45;z-index:5;min-width:150px;opacity:0}
+.bt-tip b{font-weight:700}
+.bt-tip .r{display:flex;justify-content:space-between;gap:14px;font-variant-numeric:tabular-nums}
+.bt-tablewrap{overflow-x:auto;width:100%}
+.bt table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}
+.bt th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--color-fg-muted);font-weight:700;padding:6px 8px;border-bottom:2px solid var(--color-fg);white-space:nowrap}
+.bt td{padding:7px 8px;border-bottom:1px solid var(--color-border-line);vertical-align:top}
+.bt td.num,.bt th.num{text-align:right}
+.bt-tag{display:inline-block;font-size:11px;font-weight:700;border-radius:4px;padding:1px 7px;white-space:nowrap}
+.bt-tag.over{background:var(--color-bad);color:#fff}
+.bt-tag.bench{background:var(--bt-ink);color:var(--bt-yellow)}
+.bt-tag.watch{border:1px solid var(--color-fg-muted);color:var(--color-fg-muted)}
+.bt-certs{color:var(--color-fg-muted);font-size:12px}
+.bt-note{font-size:12px;color:var(--color-fg-muted);margin:0}
+.bt details.bt-def{font-size:13px;color:var(--color-fg-muted)}
+.bt details.bt-def summary{cursor:pointer;font-weight:700;color:var(--color-fg)}
+.bt details.bt-def dl{display:grid;grid-template-columns:max-content 1fr;gap:6px 16px;margin:10px 0 0}
+.bt details.bt-def dt{font-weight:700;color:var(--color-fg)}
+.bt details.bt-def dd{margin:0}
+.bt-search{background:var(--color-panel);border:1px solid var(--color-border-line);border-left:6px solid var(--bt-yellow);border-radius:var(--cds-radius);padding:var(--cds-pad-lg);display:flex;flex-direction:column;gap:var(--cds-gap-md)}
+.bt-search h2{margin:0;font-size:var(--cds-font-size-heading);font-weight:800;letter-spacing:-.01em}
+.bt-search .sub{margin:0;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.bt-qrow{display:flex;gap:8px;flex-wrap:wrap}
+.bt-q{flex:1 1 320px;min-width:0;font:inherit;font-size:15px;padding:10px 14px;border:2px solid var(--color-fg);border-radius:999px;background:var(--color-bg);color:var(--color-fg)}
+.bt-q:focus{outline:none;border-color:var(--bt-yellow);box-shadow:0 0 0 3px color-mix(in srgb,var(--bt-yellow) 45%,transparent)}
+.bt-go{font:inherit;font-weight:800;font-size:14px;border:none;border-radius:999px;padding:10px 20px;background:var(--bt-yellow);color:var(--bt-ink);cursor:pointer}
+.bt-go:focus-visible{outline:2px solid var(--color-fg);outline-offset:2px}
+.bt-clear{font:inherit;font-size:13px;background:none;border:none;color:var(--color-fg-muted);text-decoration:underline;cursor:pointer}
+.bt-examples{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;color:var(--color-fg-muted)}
+.bt-ex{font:inherit;font-size:12px;border:1px dashed var(--color-border-line);background:none;color:var(--color-fg-muted);border-radius:999px;padding:3px 10px;cursor:pointer}
+.bt-ex:hover{color:var(--color-fg);border-color:var(--color-fg-muted)}
+.bt-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.bt-controls label{display:flex;flex-direction:column;gap:4px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--color-fg-muted);min-width:0}
+.bt-controls select{width:100%;min-width:0}
+.bt-crit{display:flex;flex-wrap:wrap;gap:6px;min-height:0}
+.bt-crit span{font-size:12px;font-weight:700;background:var(--bt-ink);color:var(--bt-yellow);border-radius:999px;padding:3px 10px}
+.bt-crit span.warn{background:none;color:var(--color-warn);border:1px solid var(--color-warn);font-weight:600}
+.bt-sresult{font-size:var(--cds-font-size-body);margin:0}
+.bt-sresult b{font-weight:800;font-variant-numeric:tabular-nums}
+.bt-wk{display:inline-flex;gap:3px}
+.bt-wk i{font-style:normal;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:40px;height:34px;border-radius:4px;font-size:12px;font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums;border:1px solid var(--color-border-line);color:var(--color-fg-muted)}
+.bt-wk i small{font-size:9px;font-weight:600;opacity:.8}
+.bt-wk i.ok{background:var(--bt-yellow);border-color:var(--bt-yellow);color:var(--bt-ink)}
+.bt-wk i.hol{border-style:dashed}
+.bt-tag.avail{background:var(--bt-yellow);color:var(--bt-ink)}
+.bt-tag.part{border:1px solid var(--color-fg);color:var(--color-fg)}
+.bt-tag.near{border:1px dashed var(--color-fg-muted);color:var(--color-fg-muted)}
+.bt-sempty{color:var(--color-fg-muted);font-size:13px;margin:0}
+[data-dash-source-state=refreshing]{opacity:.5}
+@media (max-width:520px){.bt-hero{padding:var(--cds-pad-md) var(--cds-pad-lg)}.bt-flabel{min-width:100%}.bt details.bt-def dl{grid-template-columns:1fr}}
+</style>
+
+<div class="bt">
+  <header class="bt-hero" id="overview">
+    <p class="bt-kicker">Brandtech Data · APAC resourcing</p>
+    <h1 class="bt-title">Utilization forecast — next 8 weeks</h1>
+    <p class="bt-lede" data-read lang="en">Forecast utilization averages <b data-draw="t-util" data-source="staffing" data-field="forecast_h">—</b> against a <b data-draw="t-target" data-source="staffing" data-field="target_util">—</b> target for the people in view, sliding to <b data-draw="t-low" data-source="staffing" data-field="forecast_h">—</b> in the week of <b data-draw="t-lowweek" data-source="staffing" data-field="week">—</b> as confirmed work rolls off. <b data-draw="t-over" data-source="staffing" data-field="forecast_h">—</b> people are over capacity in at least one week.</p>
+    <span class="bt-sample">Prototype · synthetic sample data</span>
+  </header>
+
+  <section class="bt-search" id="search" aria-label="Find available people">
+    <h2>Find who's available</h2>
+    <p class="sub">Describe the need in plain words — title or expertise, start date, duration and workload — or set it with the controls below.</p>
+    <div class="bt-qrow">
+      <input class="bt-q" id="s-q" type="search" placeholder="e.g. I need a cloud specialist with GCP certification for 3 weeks starting Nov 23" aria-label="Describe who you need" autocomplete="off">
+      <button class="bt-go" type="button" data-s-go>Search</button>
+      <button class="bt-clear" type="button" data-s-clear>Clear</button>
+    </div>
+    <div class="bt-examples">Try:
+      <button class="bt-ex" type="button" data-s-ex>Cloud specialist with GCP for 3 weeks starting Nov 23</button>
+      <button class="bt-ex" type="button" data-s-ex>Senior data scientist, half-time, 4 weeks from Dec 7</button>
+      <button class="bt-ex" type="button" data-s-ex>Salesforce consultant in Singapore full-time next week for 2 weeks</button>
+      <button class="bt-ex" type="button" data-s-ex>Measurement specialist with Google Marketing Platform in Jellyfish from Dec 14 to Jan 4</button>
+    </div>
+    <div class="bt-controls">
+      <label>Job title
+        <select class="dash-select" data-s="s_title" aria-label="Job title">
+          <option value="">Any title</option>
+          <option value="Consultant|Senior Consultant">Consultant (any level)</option>
+          <option value="Consultant">Consultant</option>
+          <option value="Senior Consultant">Senior Consultant</option>
+          <option value="Project Lead">Project Lead</option>
+          <option value="Consulting Manager">Consulting Manager</option>
+          <option value="Measurement Specialist|Sr Measurement Specialist">Measurement Specialist (any level)</option>
+          <option value="Measurement Specialist">Measurement Specialist</option>
+          <option value="Sr Measurement Specialist">Sr Measurement Specialist</option>
+          <option value="Cloud Specialist|Sr Cloud Specialist">Cloud Specialist (any level)</option>
+          <option value="Cloud Specialist">Cloud Specialist</option>
+          <option value="Sr Cloud Specialist">Sr Cloud Specialist</option>
+          <option value="Data Eng|Sr Data Eng">Data Eng (any level)</option>
+          <option value="Data Eng">Data Eng</option>
+          <option value="Sr Data Eng">Sr Data Eng</option>
+          <option value="Data Scientist|Sr Data Scientist">Data Scientist (any level)</option>
+          <option value="Data Scientist">Data Scientist</option>
+          <option value="Sr Data Scientist">Sr Data Scientist</option>
+          <option value="Data Architect|Sr Data Architect">Data Architect (any level)</option>
+          <option value="Data Architect">Data Architect</option>
+          <option value="Sr Data Architect">Sr Data Architect</option>
+        </select>
+      </label>
+      <label>Expertise
+        <select class="dash-select" data-s="s_cert" data-draw="s-cert-opts" aria-label="Expertise or certification"></select>
+      </label>
+      <label>Starting week
+        <select class="dash-select" data-s="s_start" aria-label="Starting week">
+          <option value="2026-11-16">16 Nov</option>
+          <option value="2026-11-23">23 Nov</option>
+          <option value="2026-11-30">30 Nov</option>
+          <option value="2026-12-07">7 Dec</option>
+          <option value="2026-12-14">14 Dec</option>
+          <option value="2026-12-21">21 Dec</option>
+          <option value="2026-12-28">28 Dec</option>
+          <option value="2027-01-04">4 Jan</option>
+        </select>
+      </label>
+      <label>Duration
+        <select class="dash-select" data-s="s_weeks" aria-label="Duration in weeks">
+          <option value="1">1 week</option>
+          <option value="2">2 weeks</option>
+          <option value="3">3 weeks</option>
+          <option value="4">4 weeks</option>
+          <option value="5">5 weeks</option>
+          <option value="6">6 weeks</option>
+          <option value="7">7 weeks</option>
+          <option value="8">8 weeks</option>
+        </select>
+      </label>
+      <label>Free each week
+        <select class="dash-select" data-s="s_min" aria-label="Minimum free time each week">
+          <option value="0.25">≥ 25% (1+ day)</option>
+          <option value="0.5">≥ 50% (half-time)</option>
+          <option value="0.75">≥ 75%</option>
+          <option value="1">100% (full-time)</option>
+        </select>
+      </label>
+      <label>Count as busy
+        <select class="dash-select" data-s="s_basis" aria-label="What counts as busy">
+          <option value="forecast">Confirmed + weighted pipeline</option>
+          <option value="confirmed">Confirmed work only</option>
+        </select>
+      </label>
+    </div>
+    <div class="bt-crit" data-draw="s-crit" aria-label="Search criteria"></div>
+    <p class="bt-sresult" id="s-none" hidden>Describe a role or pick a job title or expertise to see who's free.</p>
+    <p class="bt-sresult" id="s-summary" hidden><b data-draw="s-n-avail" data-source="staffing" data-field="forecast_h">—</b> fully available and <b data-draw="s-n-part" data-source="staffing" data-field="forecast_h">—</b> partly available for <span data-draw="s-window">—</span>.</p>
+    <div class="bt-tablewrap" data-source="staffing" id="s-table" hidden>
+      <table>
+        <thead><tr><th>Person</th><th>Fit</th><th>Title</th><th>BU · Office</th><th>Certifications</th><th>Free hours by week</th><th class="num">Avg free / wk</th></tr></thead>
+        <tbody data-draw="s-results"></tbody>
+      </table>
+    </div>
+    <p class="bt-note">Each week box shows free hours (capacity after holidays and leave, minus work counted as busy); yellow means the week meets the requirement, dashed means a public holiday or leave falls that week. The search covers all APAC staff and ignores the dashboard filters below unless you name an office or business unit.</p>
+  </section>
+
+  <section class="bt-filters" id="filters" aria-label="Filters">
+    <div class="bt-frow" role="group" aria-label="Business unit">
+      <span class="bt-flabel">Business unit</span>
+      <button class="bt-chip" type="button" data-filter="bu" data-value="" aria-pressed="true">All</button>
+      <button class="bt-chip" type="button" data-filter="bu" data-value="fifty-five" aria-pressed="false">fifty-five</button>
+      <button class="bt-chip" type="button" data-filter="bu" data-value="Jellyfish" aria-pressed="false">Jellyfish</button>
+      <button class="bt-reset" type="button" data-reset>Reset all filters</button>
+    </div>
+    <div class="bt-frow" role="group" aria-label="Office">
+      <span class="bt-flabel">Office</span>
+      <button class="bt-chip" type="button" data-filter="office" data-value="Hong Kong" aria-pressed="false">Hong Kong</button>
+      <button class="bt-chip" type="button" data-filter="office" data-value="Shanghai" aria-pressed="false">Shanghai</button>
+      <button class="bt-chip" type="button" data-filter="office" data-value="Shenzhen" aria-pressed="false">Shenzhen</button>
+      <button class="bt-chip" type="button" data-filter="office" data-value="Singapore" aria-pressed="false">Singapore</button>
+      <button class="bt-chip" type="button" data-filter="office" data-value="Bangkok" aria-pressed="false">Bangkok</button>
+      <button class="bt-chip" type="button" data-filter="office" data-value="Jakarta" aria-pressed="false">Jakarta</button>
+      <button class="bt-chip" type="button" data-filter="office" data-value="Seoul" aria-pressed="false">Seoul</button>
+      <button class="bt-chip" type="button" data-filter="office" data-value="Tokyo" aria-pressed="false">Tokyo</button>
+    </div>
+    <details id="filter-title">
+      <summary><span class="bt-flabel">Job title</span><span class="bt-count" data-draw="n-title"></span></summary>
+      <div class="bt-frow" role="group" aria-label="Job title">
+        <button class="bt-chip" type="button" data-filter="title" data-value="Consultant" aria-pressed="false">Consultant</button>
+        <button class="bt-chip" type="button" data-filter="title" data-value="Senior Consultant" aria-pressed="false">Senior Consultant</button>
+        <button class="bt-chip" type="button" data-filter="title" data-value="Project Lead" aria-pressed="false">Project Lead</button>
+        <button class="bt-chip" type="button" data-filter="title" data-value="Consulting Manager" aria-pressed="false">Consulting Manager</button>
+        <button class="bt-chip" type="button" data-filter="title" data-value="Measurement Specialist" aria-pressed="false">Measurement Specialist</button>
+        <button class="bt-chip" type="button" data-filter="title" data-value="Sr Measurement Specialist" aria-pressed="false">Sr Measurement Specialist</button>
+        <button class="bt-chip" type="button" data-filter="title" data-value="Cloud Specialist" aria-pressed="false">Cloud Specialist</button>
+        <button class="bt-chip" type="button" data-filter="title" data-value="Sr Cloud Specialist" aria-pressed="false">Sr Cloud Specialist</button>
+        <button class="bt-chip" type="button" data-filter="title" data-value="Data Eng" aria-pressed="false">Data Eng</button>
+        <button class="bt-chip" type="button" data-filter="title" data-value="Sr Data Eng" aria-pressed="false">Sr Data Eng</button>
+        <button class="bt-chip" type="button" data-filter="title" data-value="Data Scientist" aria-pressed="false">Data Scientist</button>
+        <button class="bt-chip" type="button" data-filter="title" data-value="Sr Data Scientist" aria-pressed="false">Sr Data Scientist</button>
+        <button class="bt-chip" type="button" data-filter="title" data-value="Data Architect" aria-pressed="false">Data Architect</button>
+        <button class="bt-chip" type="button" data-filter="title" data-value="Sr Data Architect" aria-pressed="false">Sr Data Architect</button>
+      </div>
+    </details>
+    <details id="filter-cert">
+      <summary><span class="bt-flabel">Expertise / certification</span><span class="bt-count" data-draw="n-cert"></span></summary>
+      <div class="bt-frow" role="group" aria-label="Expertise or certification">
+        <button class="bt-chip" type="button" data-filter="cert" data-value="Google Marketing Platform" aria-pressed="false">Google Marketing Platform</button>
+        <button class="bt-chip" type="button" data-filter="cert" data-value="Google Cloud" aria-pressed="false">Google Cloud</button>
+        <button class="bt-chip" type="button" data-filter="cert" data-value="AWS" aria-pressed="false">AWS</button>
+        <button class="bt-chip" type="button" data-filter="cert" data-value="Azure" aria-pressed="false">Azure</button>
+        <button class="bt-chip" type="button" data-filter="cert" data-value="Power BI" aria-pressed="false">Power BI</button>
+        <button class="bt-chip" type="button" data-filter="cert" data-value="Adobe" aria-pressed="false">Adobe</button>
+        <button class="bt-chip" type="button" data-filter="cert" data-value="Salesforce" aria-pressed="false">Salesforce</button>
+        <button class="bt-chip" type="button" data-filter="cert" data-value="Piano" aria-pressed="false">Piano</button>
+        <button class="bt-chip" type="button" data-filter="cert" data-value="Commanders Act" aria-pressed="false">Commanders Act</button>
+        <button class="bt-chip" type="button" data-filter="cert" data-value="Piwik PRO" aria-pressed="false">Piwik PRO</button>
+        <button class="bt-chip" type="button" data-filter="cert" data-value="Didomi" aria-pressed="false">Didomi</button>
+        <button class="bt-chip" type="button" data-filter="cert" data-value="OneTrust" aria-pressed="false">OneTrust</button>
+        <button class="bt-chip" type="button" data-filter="cert" data-value="Contentsquare" aria-pressed="false">Contentsquare</button>
+        <button class="bt-chip" type="button" data-filter="cert" data-value="AB Tasty" aria-pressed="false">AB Tasty</button>
+        <button class="bt-chip" type="button" data-filter="cert" data-value="LiveRamp" aria-pressed="false">LiveRamp</button>
+      </div>
+    </details>
+    <p class="bt-note">Filters combine across groups (AND) and match any selected value within a group (OR). A person matches a certification if they hold any of the selected ones.</p>
+  </section>
+
+  <section class="bt-kpis" id="kpis" aria-label="Key figures, 16 Nov 2026 – 10 Jan 2027">
+    <div class="bt-kpi" id="kpi-util"><h3>Forecast utilization</h3><div class="v" data-draw="k-util" data-source="staffing" data-field="forecast_h">—</div><div class="s" data-draw="k-util-d"></div></div>
+    <div class="bt-kpi" id="kpi-booked"><h3>Confirmed (booked)</h3><div class="v" data-draw="k-booked" data-source="staffing" data-field="booked_h">—</div><div class="s">of capacity, 8 weeks</div></div>
+    <div class="bt-kpi" id="kpi-gap"><h3>Hours below target</h3><div class="v" data-draw="k-gap" data-source="staffing" data-field="forecast_h">—</div><div class="s" data-draw="k-gap-s"></div></div>
+    <div class="bt-kpi" id="kpi-over"><h3>Over capacity</h3><div class="v" data-draw="k-over" data-source="staffing" data-field="forecast_h">—</div><div class="s">people &gt;100% in at least one week</div></div>
+    <div class="bt-kpi" id="kpi-heads"><h3>People in view</h3><div class="v" data-draw="k-heads" data-source="staffing" data-field="person_id">—</div><div class="s" data-draw="k-heads-s"></div></div>
+  </section>
+
+  <div class="bt-grid">
+    <section class="bt-card wide" id="weekly">
+      <h2>Weekly forecast vs capacity</h2>
+      <p class="sub">Forecast = confirmed bookings + pipeline hours weighted by deal probability, as a share of available capacity (after public holidays and planned leave).</p>
+      <div class="bt-legend"><span><i class="bt-sw ink"></i>Confirmed</span><span><i class="bt-sw yel"></i>Weighted pipeline</span><span><i class="bt-sw line"></i>Target</span></div>
+      <div class="bt-chart tall" data-draw="c-weekly" data-source="staffing"></div>
+    </section>
+
+    <section class="bt-card wide" id="heatmap">
+      <h2>Office × week heatmap</h2>
+      <p class="sub">Forecast utilization by office. Deeper yellow is busier; red cells are over capacity.</p>
+      <div class="bt-legend"><span><i class="bt-sw yel" style="opacity:.35"></i>Low</span><span><i class="bt-sw yel"></i>At target</span><span><i class="bt-sw over"></i>&gt;100%</span></div>
+      <div class="bt-chart" data-draw="c-heat" data-source="staffing"></div>
+    </section>
+
+    <section class="bt-card" id="by-title">
+      <h2>By job title</h2>
+      <p class="sub">8-week forecast utilization; tick marks show each title's target.</p>
+      <div class="bt-chart tall" data-draw="c-title" data-source="staffing"></div>
+    </section>
+
+    <section class="bt-card" id="by-cert">
+      <h2>By expertise / certification</h2>
+      <p class="sub">8-week forecast utilization of people holding each certification. Hot skills sit at the top.</p>
+      <div class="bt-chart tall" data-draw="c-cert" data-source="staffing"></div>
+    </section>
+
+    <section class="bt-card wide" id="people">
+      <h2>People to act on</h2>
+      <p class="sub">Over capacity in any week, or forecast more than 20 points under their title's target across the 8 weeks. Sorted by urgency.</p>
+      <div class="bt-tablewrap" data-source="staffing">
+        <table>
+          <thead><tr><th>Person</th><th>Status</th><th>Title</th><th>BU · Office</th><th>Certifications</th><th class="num">Avg util</th><th class="num">Target</th><th class="num">Peak</th><th>Peak week</th></tr></thead>
+          <tbody data-draw="tb-people"></tbody>
+        </table>
+      </div>
+      <p class="bt-note" data-draw="people-note"></p>
+    </section>
+
+    <section class="bt-card wide" id="pipeline">
+      <h2>Open pipeline that could absorb the gap</h2>
+      <p class="sub">Opportunities matching the current business unit and office filters, and needing a selected title or certification where those are filtered.</p>
+      <div class="bt-tablewrap">
+        <table data-source="pipeline" data-row-key="id">
+          <thead><tr><th data-field="opp">Opportunity</th><th data-field="client">Client</th><th data-field="office">Office</th><th data-field="stage">Stage</th><th class="num">Prob.</th><th>Start</th><th class="num" data-field="weeks">Weeks</th><th class="num" data-field="fte">FTE</th><th>Needs</th></tr></thead>
+          <tbody data-draw="tb-pipe"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <details class="bt-def" id="definitions">
+    <summary>Definitions and method</summary>
+    <dl>
+      <dt>Capacity</dt><dd>40 hours per week, less public holidays for the office and planned leave.</dd>
+      <dt>Confirmed</dt><dd>Hours booked on signed projects in the resourcing plan.</dd>
+      <dt>Weighted pipeline</dt><dd>Hours tentatively assigned to open opportunities, multiplied by the stage probability (Qualified 25%, Scoping 40%, Proposal 50%, Shortlisted 60%, Verbal 75%).</dd>
+      <dt>Forecast utilization</dt><dd>(Confirmed + weighted pipeline) ÷ capacity, summed over the people and weeks in view.</dd>
+      <dt>Target</dt><dd>Billable target by title (e.g. 85% Consultant, 65% Consulting Manager), weighted by each person's capacity.</dd>
+      <dt>Hours below target</dt><dd>Sum over people and weeks of how far forecast hours fall short of target hours; FTE equivalent assumes 40 h × 8 weeks.</dd>
+      <dt>Data</dt><dd>All names, clients and figures are synthetic, generated to prototype the workflow. In production this would read live from the resourcing tool, timesheets and CRM pipeline.</dd>
+    </dl>
+  </details>
+</div>
+
+<script>
+(function(){
+  const parseW = d3.utcParse('%Y-%m-%d');
+  const fmtW = d3.utcFormat('%-d %b');
+  const pct = d3.format('.0%');
+  const num = d3.format(',.0f');
+  let src = null, cooked = null, psrc = null, pcooked = null;
+  const BT = window.BT = {
+    YELLOW: '#FFE600', INK: '#141414', parseW, fmtW, pct, num,
+    rows() {
+      const s = dash.data('staffing');
+      if (s.status !== 'ok') return null;
+      if (s.data !== src) {
+        src = s.data;
+        cooked = s.data.map((r) => ({
+          ...r,
+          certs: String(r.certifications || '').split('|').filter(Boolean),
+          target: +r.target_util, cap: +r.capacity_h, booked: +r.booked_h,
+          pipe: +r.pipeline_weighted_h, fc: +r.forecast_h, wd: parseW(r.week)
+        }));
+      }
+      return cooked;
+    },
+    pipe() {
+      const s = dash.data('pipeline');
+      if (s.status !== 'ok') return null;
+      if (s.data !== psrc) {
+        psrc = s.data;
+        pcooked = s.data.map((r) => ({...r, prob: +r.probability, titleList: String(r.titles||'').split('|').filter(Boolean), certList: String(r.certs||'').split('|').filter(Boolean)}));
+      }
+      return pcooked;
+    },
+    sel() {
+      const p = dash.params();
+      const sp = (v) => (v ? String(v).split('|').filter(Boolean) : []);
+      return {bu: p.bu || '', office: sp(p.office), title: sp(p.title), cert: sp(p.cert)};
+    },
+    filtered() {
+      const rows = BT.rows();
+      if (!rows) return null;
+      const s = BT.sel();
+      return rows.filter((r) => (!s.bu || r.bu === s.bu)
+        && (!s.office.length || s.office.includes(r.office))
+        && (!s.title.length || s.title.includes(r.title))
+        && (!s.cert.length || r.certs.some((c) => s.cert.includes(c))));
+    },
+    totals(rows) {
+      const cap = d3.sum(rows, (d) => d.cap);
+      return {cap, fc: d3.sum(rows, (d) => d.fc), booked: d3.sum(rows, (d) => d.booked), pipe: d3.sum(rows, (d) => d.pipe), tgt: d3.sum(rows, (d) => d.cap * d.target)};
+    },
+    weekly(rows) {
+      return d3.rollups(rows, (v) => BT.totals(v), (d) => d.week)
+        .sort((a, b) => d3.ascending(a[0], b[0]))
+        .map(([week, o]) => ({week, wd: parseW(week), ...o,
+          util: o.cap ? o.fc / o.cap : 0, bookedU: o.cap ? o.booked / o.cap : 0,
+          pipeU: o.cap ? o.pipe / o.cap : 0, tgtU: o.cap ? o.tgt / o.cap : 0}));
+    },
+    byPerson(rows) {
+      return d3.rollups(rows, (v) => {
+        const t = BT.totals(v);
+        const wk = v.filter((d) => d.cap > 0).map((d) => ({week: d.week, u: d.fc / d.cap}));
+        const peak = d3.greatest(wk, (d) => d.u) || {week: v[0].week, u: 0};
+        return {...v[0], ...t, util: t.cap ? t.fc / t.cap : 0, peak: peak.u, peakWeek: peak.week};
+      }, (d) => d.person_id).map((d) => d[1]);
+    },
+    status(s, el, show) {
+      el.classList.toggle('dash-skeleton', s === 'loading');
+      if (s !== 'ok') { if (show !== false) el.textContent = s === 'error' ? 'Failed to load' : '—'; return false; }
+      return true;
+    },
+    tip(el) {
+      let t = el.querySelector(':scope > .bt-tip');
+      if (!t) { t = document.createElement('div'); t.className = 'bt-tip'; el.appendChild(t); }
+      return {
+        show(ev, rows) {
+          t.replaceChildren(...rows.map(([k, v], i) => {
+            const d = document.createElement('div');
+            if (i === 0) { const b = document.createElement('b'); b.textContent = k; d.appendChild(b); return d; }
+            d.className = 'r';
+            const a = document.createElement('span'); a.textContent = k;
+            const b = document.createElement('span'); b.textContent = v;
+            d.append(a, b); return d;
+          }));
+          const box = el.getBoundingClientRect();
+          let x = ev.clientX - box.left + 12, y = ev.clientY - box.top + 12;
+          t.style.opacity = 1;
+          const w = t.offsetWidth, h = t.offsetHeight;
+          if (x + w > box.width) x = Math.max(0, ev.clientX - box.left - w - 12);
+          if (y + h > box.height + 40) y = Math.max(0, ev.clientY - box.top - h - 12);
+          t.style.left = x + 'px'; t.style.top = y + 'px';
+        },
+        hide() { t.style.opacity = 0; }
+      };
+    }
+  };
+
+  // Filter controls: listen, and reflect state through aria-pressed only.
+  const root = document.getElementById('filters');
+  if (root) {
+    root.addEventListener('click', (e) => {
+      const reset = e.target.closest('[data-reset]');
+      if (reset) { dash.resetParams(); return; }
+      const b = e.target.closest('[data-filter]');
+      if (!b) return;
+      const k = b.getAttribute('data-filter'), v = b.getAttribute('data-value');
+      if (k === 'bu') { dash.setParams({bu: v || null}); return; }
+      const cur = BT.sel()[k];
+      const next = cur.includes(v) ? cur.filter((x) => x !== v) : cur.concat(v);
+      dash.setParams({[k]: next.length ? next.join('|') : null});
+    });
+  }
+  dash.onData(() => {
+    const s = BT.sel();
+    document.querySelectorAll('#filters [data-filter]').forEach((b) => {
+      const k = b.getAttribute('data-filter'), v = b.getAttribute('data-value');
+      const on = k === 'bu' ? (s.bu || '') === v : s[k].includes(v);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  });
+
+  dash.draw('n-title', (el) => { const n = BT.sel().title.length; el.textContent = n ? n + ' selected' : 'all'; });
+  dash.draw('n-cert', (el) => { const n = BT.sel().cert.length; el.textContent = n ? n + ' selected' : 'all'; });
+})();
+</script>
+
+<script>
+(function(){
+  const BT = window.BT;
+  const st = () => dash.data('staffing').status;
+  const ctx = () => {
+    const rows = BT.filtered();
+    if (!rows || !rows.length) return null;
+    const t = BT.totals(rows);
+    const wk = BT.weekly(rows);
+    const people = BT.byPerson(rows);
+    return {rows, t, wk, people};
+  };
+  const empty = (el) => { el.classList.remove('dash-skeleton'); el.textContent = 'No match'; };
+
+  dash.draw('t-util', (el) => { if (!BT.status(st(), el)) return; const c = ctx(); if (!c) return empty(el); el.textContent = BT.pct(c.t.fc / c.t.cap); });
+  dash.draw('t-target', (el) => { if (!BT.status(st(), el)) return; const c = ctx(); if (!c) return empty(el); el.textContent = BT.pct(c.t.tgt / c.t.cap); });
+  dash.draw('t-low', (el) => { if (!BT.status(st(), el)) return; const c = ctx(); if (!c) return empty(el); el.textContent = BT.pct(d3.least(c.wk, (d) => d.util).util); });
+  dash.draw('t-lowweek', (el) => { if (!BT.status(st(), el)) return; const c = ctx(); if (!c) return empty(el); el.textContent = BT.fmtW(d3.least(c.wk, (d) => d.util).wd); });
+  dash.draw('t-over', (el) => { if (!BT.status(st(), el)) return; const c = ctx(); if (!c) return empty(el); el.textContent = c.people.filter((p) => p.peak > 1.0001).length; });
+
+  dash.draw('k-util', (el) => { if (!BT.status(st(), el)) return; const c = ctx(); if (!c) return empty(el); el.textContent = BT.pct(c.t.fc / c.t.cap); });
+  dash.draw('k-util-d', (el) => {
+    el.className = 's';
+    const c = st() === 'ok' ? ctx() : null;
+    if (!c) { el.textContent = ''; return; }
+    const u = c.t.fc / c.t.cap, g = c.t.tgt / c.t.cap, d = Math.round((u - g) * 100);
+    el.textContent = (d >= 0 ? '+' : '−') + Math.abs(d) + ' pts vs ' + BT.pct(g) + ' target';
+    el.classList.add(d >= -3 ? 'bt-good' : d >= -10 ? 'bt-warn' : 'bt-bad');
+  });
+  dash.draw('k-booked', (el) => { if (!BT.status(st(), el)) return; const c = ctx(); if (!c) return empty(el); el.textContent = BT.pct(c.t.booked / c.t.cap); });
+  dash.draw('k-gap', (el) => {
+    if (!BT.status(st(), el)) return; const c = ctx(); if (!c) return empty(el);
+    el.textContent = BT.num(d3.sum(c.rows, (d) => Math.max(0, d.cap * d.target - d.fc))) + ' h';
+  });
+  dash.draw('k-gap-s', (el) => {
+    const c = st() === 'ok' ? ctx() : null;
+    if (!c) { el.textContent = ''; return; }
+    const h = d3.sum(c.rows, (d) => Math.max(0, d.cap * d.target - d.fc));
+    el.textContent = '≈ ' + d3.format('.1f')(h / 320) + ' FTE idle over 8 weeks';
+  });
+  dash.draw('k-over', (el) => { if (!BT.status(st(), el)) return; const c = ctx(); if (!c) return empty(el); el.textContent = c.people.filter((p) => p.peak > 1.0001).length; });
+  dash.draw('k-heads', (el) => { if (!BT.status(st(), el)) return; const c = ctx(); if (!c) { el.classList.remove('dash-skeleton'); el.textContent = '0'; return; } el.textContent = c.people.length; });
+  dash.draw('k-heads-s', (el) => {
+    const c = st() === 'ok' ? ctx() : null;
+    el.textContent = c ? BT.num(c.t.cap) + ' capacity hours' : (st() === 'ok' ? 'No one matches these filters' : '');
+  });
+})();
+</script>
+
+<script>
+(function(){
+  const BT = window.BT;
+  const reduce = () => !window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+  let animated = false;
+
+  function frame(el, h) {
+    el.classList.remove('dash-skeleton');
+    const s = dash.data('staffing').status;
+    if (s !== 'ok') {
+      el.replaceChildren();
+      const p = document.createElement('p'); p.className = 'bt-note';
+      p.textContent = s === 'error' ? 'Failed to load' : (s === 'loading' ? '' : '—');
+      if (s === 'loading') el.classList.add('dash-skeleton');
+      el.appendChild(p); return null;
+    }
+    const rows = BT.filtered();
+    if (!rows || !rows.length) {
+      el.replaceChildren();
+      const p = document.createElement('p'); p.className = 'bt-note'; p.textContent = 'No people match these filters.';
+      el.appendChild(p); return null;
+    }
+    el.querySelectorAll(':scope > p').forEach((n) => n.remove());
+    return rows;
+  }
+
+  // Weekly stacked bars
+  dash.draw('c-weekly', (el) => {
+    const rows = frame(el); if (!rows) return;
+    const wk = BT.weekly(rows);
+    const W = Math.max(280, el.clientWidth), H = 320;
+    el.querySelectorAll('svg').forEach((n) => n.remove());
+    const svg = d3.select(el).insert('svg', ':first-child').attr('width', W).attr('height', H)
+      .attr('role', 'img').attr('aria-label', 'Weekly forecast utilization, confirmed plus weighted pipeline, against target, for the next 8 weeks');
+    const yMax = Math.max(1.05, d3.max(wk, (d) => d.util) * 1.1);
+    const y = d3.scaleLinear().domain([0, yMax]).range([H - 30, 18]);
+    const yAx = svg.append('g').attr('class', 'bt-axis').call(d3.axisLeft(y).ticks(5, '.0%').tickSize(0));
+    let ml = 0; yAx.selectAll('text').each(function(){ ml = Math.max(ml, this.getComputedTextLength()); });
+    ml += 10; yAx.attr('transform', `translate(${ml},0)`); yAx.select('.domain').remove();
+    const x = d3.scaleBand().domain(wk.map((d) => d.week)).range([ml + 4, W - 4]).padding(0.28);
+    svg.insert('g', ':first-child').attr('class', 'bt-gridl').attr('transform', `translate(${ml + 4},0)`)
+      .call(d3.axisLeft(y).ticks(5).tickSize(-(W - ml - 8)).tickFormat(''));
+    const xAx = svg.append('g').attr('class', 'bt-axis').attr('transform', `translate(0,${H - 30})`)
+      .call(d3.axisBottom(x).tickSize(0).tickPadding(8).tickFormat((w) => BT.fmtW(BT.parseW(w))));
+    xAx.select('.domain').style('stroke', 'var(--cds-chart-axis)');
+    if (x.bandwidth() < 34) xAx.selectAll('text').filter((d, i) => i % 2).remove();
+    // 100% reference
+    svg.append('line').attr('x1', ml + 4).attr('x2', W - 4).attr('y1', y(1)).attr('y2', y(1)).style('stroke', 'var(--cds-chart-reference)');
+    svg.append('text').attr('x', W - 4).attr('y', y(1) - 5).attr('text-anchor', 'end').style('fill', 'var(--cds-text-secondary)').style('font-size', '11px').text('100% capacity');
+    const anim = !animated && !reduce();
+    const g = svg.append('g');
+    const bars = g.selectAll('g').data(wk).join('g').attr('transform', (d) => `translate(${x(d.week)},0)`);
+    bars.append('rect').attr('width', x.bandwidth()).attr('rx', 2)
+      .attr('y', (d) => anim ? y(0) : y(d.bookedU)).attr('height', (d) => anim ? 0 : y(0) - y(d.bookedU))
+      .style('fill', 'var(--color-fg)')
+      .call((s) => anim && s.transition().duration(600).ease(d3.easeCubicOut).attr('y', (d) => y(d.bookedU)).attr('height', (d) => y(0) - y(d.bookedU)));
+    bars.append('rect').attr('width', x.bandwidth()).attr('rx', 2)
+      .attr('y', (d) => anim ? y(d.bookedU) : y(d.util)).attr('height', (d) => anim ? 0 : y(d.bookedU) - y(d.util))
+      .style('fill', BT.YELLOW)
+      .call((s) => anim && s.transition().delay(300).duration(600).ease(d3.easeCubicOut).attr('y', (d) => y(d.util)).attr('height', (d) => y(d.bookedU) - y(d.util)));
+    bars.append('text').attr('x', x.bandwidth() / 2).attr('y', (d) => y(d.util) - 6).attr('text-anchor', 'middle')
+      .style('font-size', x.bandwidth() < 30 ? '10px' : '12px').style('font-weight', 700).style('fill', (d) => d.util > 1 ? 'var(--color-bad)' : 'var(--color-fg)')
+      .text((d) => BT.pct(d.util));
+    // target step line
+    const tl = d3.line().x((d) => d.x).y((d) => d.y);
+    const pts = wk.flatMap((d) => [{x: x(d.week) - x.step() * x.paddingInner() / 2, y: y(d.tgtU)}, {x: x(d.week) + x.bandwidth() + x.step() * x.paddingInner() / 2, y: y(d.tgtU)}]);
+    svg.append('path').attr('d', tl(pts)).style('fill', 'none').style('stroke', 'var(--color-fg)').style('stroke-width', 2).style('stroke-dasharray', '5 4');
+    // hover
+    const tip = BT.tip(el);
+    bars.append('rect').attr('x', -x.step() * x.paddingInner() / 2).attr('width', x.step()).attr('y', 0).attr('height', H - 30).style('fill', 'transparent')
+      .on('pointermove', (ev, d) => tip.show(ev, [['Week of ' + BT.fmtW(d.wd)], ['Forecast', BT.pct(d.util)], ['Confirmed', BT.pct(d.bookedU)], ['Weighted pipeline', BT.pct(d.pipeU)], ['Target', BT.pct(d.tgtU)], ['Capacity', BT.num(d.cap) + ' h'], ['Gap to target', BT.num(Math.max(0, d.tgt - d.fc)) + ' h']]))
+      .on('pointerleave', () => tip.hide());
+    if (anim) animated = true;
+  });
+
+  // Heatmap
+  dash.draw('c-heat', (el) => {
+    const rows = frame(el); if (!rows) return;
+    const weeks = Array.from(new Set(rows.map((d) => d.week))).sort();
+    const offices = d3.rollups(rows, (v) => BT.totals(v), (d) => d.office)
+      .map(([o, t]) => ({o, u: t.fc / t.cap})).sort((a, b) => d3.descending(a.u, b.u)).map((d) => d.o);
+    const cells = d3.rollups(rows, (v) => { const t = BT.totals(v); return {...t, n: new Set(v.map((d) => d.person_id)).size}; }, (d) => d.office, (d) => d.week)
+      .flatMap(([o, ws]) => ws.map(([w, t]) => ({o, w, ...t, u: t.cap ? t.fc / t.cap : 0, g: t.cap ? t.tgt / t.cap : 0})));
+    const W = Math.max(280, el.clientWidth);
+    el.querySelectorAll('svg').forEach((n) => n.remove());
+    const svg = d3.select(el).insert('svg', ':first-child').attr('width', W)
+      .attr('role', 'img').attr('aria-label', 'Heatmap of forecast utilization by office and week');
+    const tmp = svg.append('g').attr('class', 'bt-axis');
+    let ml = 0; offices.forEach((o) => { const t = tmp.append('text').text(o); ml = Math.max(ml, t.node().getComputedTextLength()); });
+    tmp.remove(); ml += 12;
+    const rowH = 30, top = 22;
+    const H = top + offices.length * rowH + 4;
+    svg.attr('height', H);
+    const x = d3.scaleBand().domain(weeks).range([ml, W]).padding(0.06);
+    const y = d3.scaleBand().domain(offices).range([top, H - 4]).padding(0.08);
+    const op = d3.scaleLinear().domain([0.3, 0.9]).range([0.12, 1]).clamp(true);
+    const xa = svg.append('g').attr('class', 'bt-axis');
+    xa.selectAll('text').data(weeks).join('text').attr('x', (w) => x(w) + x.bandwidth() / 2).attr('y', 14).attr('text-anchor', 'middle')
+      .text((w, i) => (x.bandwidth() < 34 && i % 2) ? '' : BT.fmtW(BT.parseW(w)));
+    const ya = svg.append('g').attr('class', 'bt-axis');
+    ya.selectAll('text').data(offices).join('text').attr('x', ml - 10).attr('y', (o) => y(o) + y.bandwidth() / 2).attr('dy', '0.35em').attr('text-anchor', 'end').text((o) => o);
+    const tip = BT.tip(el);
+    const c = svg.append('g').selectAll('g').data(cells).join('g').attr('transform', (d) => `translate(${x(d.w)},${y(d.o)})`);
+    c.append('rect').attr('width', x.bandwidth()).attr('height', y.bandwidth()).attr('rx', 3)
+      .style('fill', (d) => d.u > 1 ? 'var(--color-bad)' : BT.YELLOW).style('fill-opacity', (d) => d.u > 1 ? 1 : op(d.u))
+      .on('pointermove', (ev, d) => tip.show(ev, [[d.o + ' · week of ' + BT.fmtW(BT.parseW(d.w))], ['Forecast', BT.pct(d.u)], ['Target', BT.pct(d.g)], ['People', d.n], ['Capacity', BT.num(d.cap) + ' h'], ['Spare vs target', BT.num(d.tgt - d.fc) + ' h']]))
+      .on('pointerleave', () => tip.hide());
+    if (x.bandwidth() >= 34) {
+      c.append('text').attr('x', x.bandwidth() / 2).attr('y', y.bandwidth() / 2).attr('dy', '0.35em').attr('text-anchor', 'middle').style('pointer-events', 'none')
+        .style('font-size', '11px').style('font-weight', 700).style('font-variant-numeric', 'tabular-nums')
+        .style('fill', (d) => d.u > 1 ? '#fff' : (op(d.u) > 0.55 ? BT.INK : 'var(--color-fg)')).text((d) => BT.pct(d.u));
+    }
+  });
+
+  // Horizontal bars helper
+  function hbars(el, items, label) {
+    const W = Math.max(260, el.clientWidth);
+    el.querySelectorAll('svg').forEach((n) => n.remove());
+    const rowH = 26, top = 4;
+    const H = top + items.length * rowH + 26;
+    const svg = d3.select(el).insert('svg', ':first-child').attr('width', W).attr('height', H).attr('role', 'img').attr('aria-label', label);
+    const tmp = svg.append('g').attr('class', 'bt-axis');
+    let ml = 0; items.forEach((d) => { const t = tmp.append('text').text(d.k); ml = Math.max(ml, t.node().getComputedTextLength()); });
+    tmp.remove(); ml = Math.min(ml + 12, W * 0.48);
+    const xMax = Math.max(1.05, d3.max(items, (d) => Math.max(d.u, d.g || 0)) * 1.08);
+    const x = d3.scaleLinear().domain([0, xMax]).range([ml, W - 40]);
+    const y = d3.scaleBand().domain(items.map((d) => d.k)).range([top, H - 26]).padding(0.22);
+    svg.append('g').attr('class', 'bt-gridl').attr('transform', `translate(0,${H - 26})`).call(d3.axisBottom(x).ticks(4).tickSize(-(H - 26 - top)).tickFormat(''));
+    const xa = svg.append('g').attr('class', 'bt-axis').attr('transform', `translate(0,${H - 26})`).call(d3.axisBottom(x).ticks(4, '.0%').tickSize(0).tickPadding(8));
+    xa.select('.domain').remove();
+    svg.append('line').attr('x1', x(1)).attr('x2', x(1)).attr('y1', top).attr('y2', H - 26).style('stroke', 'var(--cds-chart-reference)');
+    const ya = svg.append('g').attr('class', 'bt-axis');
+    ya.selectAll('text').data(items).join('text').attr('x', ml - 8).attr('y', (d) => y(d.k) + y.bandwidth() / 2).attr('dy', '0.35em').attr('text-anchor', 'end').text((d) => d.k);
+    const tip = BT.tip(el);
+    const g = svg.append('g').selectAll('g').data(items).join('g').attr('transform', (d) => `translate(0,${y(d.k)})`);
+    g.append('rect').attr('x', ml).attr('height', y.bandwidth()).attr('width', (d) => Math.max(0, x(d.u) - ml)).attr('rx', 2)
+      .style('fill', (d) => d.u > 1 ? 'var(--color-bad)' : (d.g && d.u < d.g - 0.1 ? 'var(--cds-chart-muted)' : BT.YELLOW));
+    g.filter((d) => d.g).append('line').attr('x1', (d) => x(d.g)).attr('x2', (d) => x(d.g)).attr('y1', -3).attr('y2', y.bandwidth() + 3).style('stroke', 'var(--color-fg)').style('stroke-width', 2);
+    g.append('text').attr('x', (d) => x(Math.max(d.u, d.g || 0)) + 6).attr('y', y.bandwidth() / 2).attr('dy', '0.35em')
+      .style('font-size', '11px').style('font-weight', 700).style('fill', 'var(--color-fg)').style('font-variant-numeric', 'tabular-nums').text((d) => BT.pct(d.u));
+    g.append('rect').attr('x', 0).attr('width', W).attr('y', -y.step() * y.paddingInner() / 2).attr('height', y.step()).style('fill', 'transparent')
+      .on('pointermove', (ev, d) => tip.show(ev, d.tip)).on('pointerleave', () => tip.hide());
+  }
+
+  dash.draw('c-title', (el) => {
+    const rows = frame(el); if (!rows) return;
+    const items = d3.rollups(rows, (v) => ({...BT.totals(v), n: new Set(v.map((d) => d.person_id)).size}), (d) => d.title)
+      .map(([k, t]) => ({k, u: t.fc / t.cap, g: t.tgt / t.cap,
+        tip: [[k], ['Forecast', BT.pct(t.fc / t.cap)], ['Target', BT.pct(t.tgt / t.cap)], ['People', t.n], ['Gap to target', BT.num(Math.max(0, t.tgt - t.fc)) + ' h']]}))
+      .sort((a, b) => d3.descending(a.u - a.g, b.u - b.g));
+    hbars(el, items, 'Forecast utilization by job title compared with target');
+  });
+
+  dash.draw('c-cert', (el) => {
+    const rows = frame(el); if (!rows) return;
+    const flat = rows.flatMap((r) => r.certs.map((c) => ({...r, cert: c})));
+    const items = d3.rollups(flat, (v) => ({...BT.totals(v), n: new Set(v.map((d) => d.person_id)).size}), (d) => d.cert)
+      .map(([k, t]) => ({k, u: t.fc / t.cap, g: t.tgt / t.cap,
+        tip: [[k], ['Forecast', BT.pct(t.fc / t.cap)], ['Target', BT.pct(t.tgt / t.cap)], ['Certified people', t.n], ['Spare vs target', BT.num(t.tgt - t.fc) + ' h']]}))
+      .sort((a, b) => d3.descending(a.u, b.u));
+    hbars(el, items, 'Forecast utilization by certification');
+  });
+})();
+</script>
+
+<script>
+(function(){
+  const BT = window.BT;
+  const td = (text, cls) => { const c = document.createElement('td'); if (cls) c.className = cls; c.textContent = text; return c; };
+
+  function peopleList() {
+    const rows = BT.filtered();
+    if (!rows) return null;
+    return BT.byPerson(rows).map((p) => {
+      const over = p.peak > 1.0001, bench = p.util < p.target - 0.2;
+      return {...p, flag: over ? 'over' : bench ? 'bench' : null};
+    }).filter((p) => p.flag).sort((a, b) => (a.flag === b.flag) ? (a.flag === 'over' ? b.peak - a.peak : a.util - b.util) : (a.flag === 'over' ? -1 : 1));
+  }
+
+  dash.draw('tb-people', (el) => {
+    const s = dash.data('staffing').status;
+    el.replaceChildren();
+    if (s !== 'ok') { const tr = document.createElement('tr'); const c = td(s === 'error' ? 'Failed to load' : '—'); c.colSpan = 9; tr.appendChild(c); el.appendChild(tr); return; }
+    const list = peopleList() || [];
+    if (!list.length) { const tr = document.createElement('tr'); const c = td('No one in view is over capacity or far below target.'); c.colSpan = 9; tr.appendChild(c); el.appendChild(tr); return; }
+    list.slice(0, 30).forEach((p) => {
+      const tr = document.createElement('tr');
+      const tag = document.createElement('span'); tag.className = 'bt-tag ' + p.flag; tag.textContent = p.flag === 'over' ? 'Overbooked' : 'Bench risk';
+      const st = document.createElement('td'); st.appendChild(tag);
+      tr.append(td(p.name), st, td(p.title), td(p.bu + ' · ' + p.office), td(p.certs.join(', '), 'bt-certs'),
+        td(BT.pct(p.util), 'num'), td(BT.pct(p.target), 'num'), td(BT.pct(p.peak), 'num'), td(BT.fmtW(BT.parseW(p.peakWeek))));
+      el.appendChild(tr);
+    });
+  });
+  dash.draw('people-note', (el) => {
+    const list = dash.data('staffing').status === 'ok' ? (peopleList() || []) : [];
+    const o = list.filter((p) => p.flag === 'over').length, b = list.length - o;
+    el.textContent = list.length ? `${o} overbooked and ${b} at bench risk${list.length > 30 ? ' — showing the 30 most urgent' : ''}.` : '';
+  });
+
+  dash.draw('tb-pipe', (el) => {
+    const s = dash.data('pipeline').status;
+    el.replaceChildren();
+    if (s !== 'ok') { const tr = document.createElement('tr'); const c = td(s === 'error' ? 'Failed to load' : '—'); c.colSpan = 9; tr.appendChild(c); el.appendChild(tr); return; }
+    const f = BT.sel();
+    const list = (BT.pipe() || []).filter((o) => (!f.bu || o.bu === f.bu)
+      && (!f.office.length || f.office.includes(o.office))
+      && (!f.title.length || o.titleList.some((t) => f.title.includes(t)))
+      && (!f.cert.length || o.certList.some((c) => f.cert.includes(c))))
+      .sort((a, b) => d3.ascending(a.start_week, b.start_week) || d3.descending(a.prob, b.prob));
+    if (!list.length) { const tr = document.createElement('tr'); const c = td('No open opportunities match these filters.'); c.colSpan = 9; tr.appendChild(c); el.appendChild(tr); return; }
+    list.forEach((o) => {
+      const tr = document.createElement('tr'); tr.setAttribute('data-key', encodeURIComponent(o.id));
+      tr.append(td(o.opp), td(o.client), td(o.office), td(o.stage), td(BT.pct(o.prob), 'num'), td(BT.fmtW(BT.parseW(o.start_week))), td(String(o.weeks), 'num'), td(String(o.fte), 'num'),
+        td(o.certList.join(', ') + ' · ' + o.titleList.join(', '), 'bt-certs'));
+      el.appendChild(tr);
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  const BT = window.BT;
+  const WEEKS = ['2026-11-16','2026-11-23','2026-11-30','2026-12-07','2026-12-14','2026-12-21','2026-12-28','2027-01-04'];
+  const CERTS = ['Google Marketing Platform','Google Cloud','AWS','Azure','Power BI','Adobe','Salesforce','Piano','Commanders Act','Piwik PRO','Didomi','OneTrust','Contentsquare','AB Tasty','LiveRamp'];
+  const MIN_OPTS = [0.25, 0.5, 0.75, 1];
+
+  // ---------- plain-language parser ----------
+  const FAMILIES = [
+    {re: /\b(consulting|engagement|account)\s+managers?\b|\bmanagers?\b/, base: 'Consulting Manager'},
+    {re: /\bproject\s+(lead|manager)s?\b|\bdelivery\s+lead\b|\bpm\b/, base: 'Project Lead'},
+    {re: /\bmeasurement(\s+specialists?)?\b|\bmmm\s+(specialist|expert)s?\b|\banalytics\s+(specialist|consultant)s?\b|\btracking\s+specialists?\b/, base: 'Measurement Specialist', sr: 'Sr Measurement Specialist'},
+    {re: /\bcloud\s+(specialist|engineer|expert|consultant)s?\b/, base: 'Cloud Specialist', sr: 'Sr Cloud Specialist'},
+    {re: /\bdata\s+eng(ineer|ineering)?s?\b|\banalytics\s+engineers?\b/, base: 'Data Eng', sr: 'Sr Data Eng'},
+    {re: /\bdata\s+scien(tist|ce)s?\b|\bml\s+engineers?\b|\bmachine\s+learning\b/, base: 'Data Scientist', sr: 'Sr Data Scientist'},
+    {re: /\b(data\s+|solutions?\s+)?architects?\b/, base: 'Data Architect', sr: 'Sr Data Architect'},
+    {re: /\bconsultants?\b/, base: 'Consultant', sr: 'Senior Consultant'}
+  ];
+  const CERT_ALIASES = [
+    ['Google Cloud', /\bgcp\b|\bgoogle\s+cloud\b|\bbig\s?query\b|\bvertex\b/],
+    ['Google Marketing Platform', /\bgmp\b|\bgoogle\s+marketing\s+platform\b|\bga4\b|\bgoogle\s+analytics\b|\bdv360\b|\bcm360\b|\bsa360\b|\bads\s+data\s+hub\b|\badh\b/],
+    ['AWS', /\baws\b|\bamazon\s+web\s+services\b|\bredshift\b/],
+    ['Azure', /\bazure\b|\bfabric\b/],
+    ['Power BI', /\bpower\s?bi\b/],
+    ['Adobe', /\badobe\b|\baem\b|\bcja\b/],
+    ['Salesforce', /\bsalesforce\b|\bsfdc\b|\bdata\s+cloud\b|\bmarketing\s+cloud\b/],
+    ['Piano', /\bpiano\b|\bat\s+internet\b/],
+    ['Commanders Act', /\bcommanders?\s+act\b|\btag\s?commander\b/],
+    ['Piwik PRO', /\bpiwik\b/],
+    ['Didomi', /\bdidomi\b/],
+    ['OneTrust', /\bone\s?trust\b/],
+    ['Contentsquare', /\bcontent\s?square\b/],
+    ['AB Tasty', /\bab\s?tasty\b/],
+    ['LiveRamp', /\blive\s?ramp\b/]
+  ];
+  const OFFICE_ALIASES = [
+    ['Hong Kong', /\bhong\s?kong\b|\bhk\b/], ['Shanghai', /\bshanghai\b|\bsh\b/], ['Shenzhen', /\bshenzhen\b|\bsz\b/],
+    ['Singapore', /\bsingapore\b|\bsg\b/], ['Bangkok', /\bbangkok\b|\bbkk\b/], ['Jakarta', /\bjakarta\b/],
+    ['Seoul', /\bseoul\b/], ['Tokyo', /\btokyo\b/]
+  ];
+  const MONTHS = {jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11};
+  const WORDNUM = {one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, a: 1, an: 1};
+  const toNum = (s) => WORDNUM[s] || +s;
+  const wkDate = (iso) => BT.parseW(iso);
+  const mkDate = (m, d) => new Date(Date.UTC(m === 0 ? 2027 : 2026, m, d));
+  function weekIndexOf(date) {
+    let idx = -1;
+    WEEKS.forEach((w, i) => { if (wkDate(w) <= date) idx = i; });
+    return idx;
+  }
+
+  function findDates(q) {
+    const out = [];
+    const mon = '(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\\.?';
+    let m;
+    const r1 = new RegExp('\\b(\\d{1,2})(?:st|nd|rd|th)?\\s+(?:of\\s+)?' + mon, 'g');
+    while ((m = r1.exec(q))) out.push({pos: m.index, d: mkDate(MONTHS[m[2]], +m[1])});
+    const r2 = new RegExp('\\b' + mon + '\\s+(\\d{1,2})(?:st|nd|rd|th)?\\b', 'g');
+    while ((m = r2.exec(q))) out.push({pos: m.index, d: mkDate(MONTHS[m[1]], +m[2])});
+    const r3 = /\b(20\d\d)-(\d\d)-(\d\d)\b/g;
+    while ((m = r3.exec(q))) out.push({pos: m.index, d: new Date(Date.UTC(+m[1], +m[2] - 1, +m[3]))});
+    const r4 = new RegExp('\\b(early|beginning\\s+of|mid|middle\\s+of|late|end\\s+of)[\\s-]+' + mon, 'g');
+    while ((m = r4.exec(q))) {
+      const day = /early|beginning/.test(m[1]) ? 1 : /mid|middle/.test(m[1]) ? 15 : 24;
+      out.push({pos: m.index, d: mkDate(MONTHS[m[2]], day)});
+    }
+    // de-duplicate overlapping matches (keep earliest position per date)
+    const seen = new Set();
+    return out.sort((a, b) => a.pos - b.pos).filter((x) => { const k = +x.d; if (seen.has(k)) return false; seen.add(k); return true; });
+  }
+
+  BT.parseNeed = function(text) {
+    const q = ' ' + String(text || '').toLowerCase().replace(/[’']/g, '') + ' ';
+    const notes = [];
+    const out = {s_q: String(text || '').trim()};
+    // certifications (all mentioned, AND)
+    const certs = CERT_ALIASES.filter(([, re]) => re.test(q)).map(([c]) => c);
+    // strip cert phrases before title matching so "google cloud" or "data cloud" don't read as a role
+    let qt = q;
+    CERT_ALIASES.forEach(([, re]) => { qt = qt.replace(new RegExp(re.source, 'g'), ' '); });
+    // title
+    let title = null;
+    for (const f of FAMILIES) {
+      if (f.re.test(qt)) {
+        const senior = /\b(senior|sr\.?|experienced)\b/.test(qt);
+        const junior = /\b(junior|jr\.?|entry)\b/.test(qt);
+        title = f.sr ? (senior ? f.sr : junior ? f.base : f.base + '|' + f.sr) : f.base;
+        break;
+      }
+    }
+    if (!title && /\bcloud\b/.test(qt) && !certs.length) title = 'Cloud Specialist|Sr Cloud Specialist';
+    out.s_title = title;
+    out.s_cert = certs.length ? certs.join('|') : null;
+    // offices and business unit
+    const offices = OFFICE_ALIASES.filter(([, re]) => re.test(q)).map(([o]) => o);
+    out.s_office = offices.length ? offices.join('|') : null;
+    out.s_bu = /\bfifty[\s-]?five\b|\b55\b/.test(q) ? 'fifty-five' : /\bjelly\s?fish\b/.test(q) ? 'Jellyfish' : null;
+    // dates
+    const dates = findDates(q);
+    let si = null, ei = null;
+    if (/\b(this\s+week|now|asap|immediately|right\s+away|straight\s+away)\b/.test(q)) si = 0;
+    else if (/\bnext\s+week\b/.test(q)) si = 1;
+    else if ((/\bin\s+(\d|one|two|three|four|five|six|seven)\s+weeks?\b/.exec(q))) si = toNum(/\bin\s+(\d|one|two|three|four|five|six|seven)\s+weeks?\b/.exec(q)[1]);
+    let endDate = null;
+    if (dates.length) {
+      const first = dates[0];
+      const before = q.slice(Math.max(0, first.pos - 14), first.pos);
+      if (si === null || !/\b(until|till|to|through|thru|ending|by)\s*$/.test(before)) {
+        if (si === null) {
+          const idx = weekIndexOf(first.d);
+          if (idx < 0) { si = 0; notes.push('Start date is before the forecast window, so it starts 16 Nov'); }
+          else if (+first.d > +wkDate(WEEKS[WEEKS.length - 1]) + 6 * 864e5) { si = WEEKS.length - 1; notes.push('Start date is after the forecast window, so it shows the last forecast week'); }
+          else si = idx;
+        }
+      }
+      const endCand = dates.find((x, i) => i > 0 || si !== null && x !== first) || null;
+      const endMatch = dates.find((x) => /\b(until|till|to|through|thru|ending|-|–)\s*$/.test(q.slice(Math.max(0, x.pos - 12), x.pos)));
+      if (endMatch && endMatch !== dates[0]) endDate = endMatch.d;
+      else if (dates.length > 1 && endCand) endDate = dates[1].d;
+    }
+    if (si === null) { si = 0; if (!dates.length) notes.push('No start date found, so it starts 16 Nov'); }
+    out.s_start = WEEKS[si];
+    // duration
+    let n = null, m;
+    const PERWEEK = /\b(\d|one|two|three|four|five)\s*days?\s*(a|per|\/|each)\s*w(ee)?k\b|\b(per|each)\s+week\b|\bweekly\b/g;
+    const qd = q.replace(PERWEEK, ' ');
+    if ((m = /\b(\d+|one|two|three|four|five|six|seven|eight|a)\s*-?\s*(weeks?|wks?)\b/.exec(qd))) n = toNum(m[1]);
+    else if ((m = /\b(\d+|one|two|a)\s+months?\b/.exec(qd))) n = toNum(m[1]) * 4;
+    else if (/\bfortnight\b/.test(qd)) n = 2;
+    else if ((m = /\b(\d+)\s+(working\s+)?days?\b/.exec(qd))) n = Math.max(1, Math.ceil(+m[1] / 5));
+    if (n === null && endDate) {
+      ei = weekIndexOf(endDate);
+      if (ei < 0) ei = 0;
+      n = Math.max(1, ei - si + 1);
+    }
+    if (n === null) { n = 2; notes.push('No duration found, so it assumes 2 weeks'); }
+    if (si + n > WEEKS.length) notes.push('Only ' + (WEEKS.length - si) + ' of ' + n + ' weeks fall inside the 8-week forecast');
+    out.s_weeks = Math.max(1, Math.min(8, n));
+    // workload
+    let load = null;
+    if (/\bfull[\s-]?time\b|\bdedicated\b|\b1\s*fte\b|\b100\s*%/.test(q)) load = 1;
+    else if ((m = /\b(\d|one|two|three|four|five)\s*days?\s*(a|per|\/|each)\s*w(ee)?k\b/.exec(q))) load = toNum(m[1]) / 5;
+    else if ((m = /\b(\d{1,3})\s*%/.exec(q))) load = +m[1] / 100;
+    else if (/\bhalf[\s-]?time\b|\bpart[\s-]?time\b|\bhalf\b|\b0?\.5\s*fte\b/.test(q)) load = 0.5;
+    else if (/\bquarter[\s-]?time\b|\bone\s+day\s+a\s+week\b/.test(q)) load = 0.25;
+    if (load === null) load = 0.5;
+    out.s_min = MIN_OPTS.find((o) => o >= load - 0.001) || 1;
+    out.s_basis = /\bconfirmed\s+only\b|\b(ignore|ignoring|exclude|excluding|without)\s+(the\s+)?pipeline\b/.test(q) ? 'confirmed' : 'forecast';
+    if (!out.s_title && !out.s_cert) notes.push('No job title or expertise recognised — try e.g. "data engineer with AWS"');
+    out.s_notes = notes.length ? notes.join('|') : null;
+    return out;
+  };
+
+  // ---------- search state & results ----------
+  const sp = (v) => (v ? String(v).split('|').filter(Boolean) : []);
+  BT.searchCrit = function() {
+    const p = dash.params();
+    const start = WEEKS.includes(p.s_start) ? p.s_start : WEEKS[0];
+    const i = WEEKS.indexOf(start);
+    const n = Math.max(1, Math.min(8, Math.round(+p.s_weeks) || 2));
+    return {title: sp(p.s_title), cert: sp(p.s_cert), office: sp(p.s_office), bu: p.s_bu || '',
+      start, i, n, win: WEEKS.slice(i, i + n), min: MIN_OPTS.includes(+p.s_min) ? +p.s_min : 0.5,
+      basis: p.s_basis === 'confirmed' ? 'confirmed' : 'forecast', notes: sp(p.s_notes),
+      active: !!(p.s_title || p.s_cert)};
+  };
+  BT.searchResults = function() {
+    const rows = BT.rows();
+    if (!rows) return null;
+    const c = BT.searchCrit();
+    if (!c.active) return {c, list: []};
+    const match = rows.filter((r) => c.win.includes(r.week)
+      && (!c.title.length || c.title.includes(r.title))
+      && (!c.cert.length || c.cert.every((x) => r.certs.includes(x)))
+      && (!c.office.length || c.office.includes(r.office))
+      && (!c.bu || r.bu === c.bu));
+    const list = Array.from(d3.group(match, (d) => d.person_id).values()).map((v) => {
+      const wk = c.win.map((w) => {
+        const r = v.find((d) => d.week === w);
+        if (!r) return {w, cap: 0, free: 0, ok: false, hol: false};
+        const busy = c.basis === 'confirmed' ? r.booked : r.fc;
+        const free = Math.max(0, r.cap - busy);
+        return {w, cap: r.cap, free, ok: r.cap > 0 && free >= c.min * r.cap - 0.05, hol: (+r.holiday_days > 0 || +r.leave_days > 0)};
+      });
+      const met = wk.filter((x) => x.ok).length;
+      return {...v[0], wk, met, avg: d3.mean(wk, (x) => x.free),
+        fit: met === wk.length ? 'avail' : met >= Math.ceil(wk.length / 2) ? 'part' : 'near'};
+    }).sort((a, b) => b.met - a.met || b.avg - a.avg);
+    return {c, list};
+  };
+
+  const root = document.getElementById('search');
+  const run = (text) => { if (text && text.trim()) dash.setParams(BT.parseNeed(text)); };
+  if (root) {
+    root.addEventListener('click', (e) => {
+      if (e.target.closest('[data-s-go]')) { const q = root.querySelector('#s-q'); run(q ? q.value : ''); return; }
+      if (e.target.closest('[data-s-clear]')) {
+        const q = root.querySelector('#s-q'); if (q) q.value = '';
+        dash.setParams({s_q: null, s_title: null, s_cert: null, s_office: null, s_bu: null, s_notes: null, s_start: null, s_weeks: null, s_min: null, s_basis: null});
+        return;
+      }
+      const ex = e.target.closest('[data-s-ex]');
+      if (ex) { const q = root.querySelector('#s-q'); const t = ex.textContent; if (q) q.value = t; run(t); }
+    });
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && e.target.id === 's-q') { e.preventDefault(); run(e.target.value); }
+    });
+    root.addEventListener('change', (e) => {
+      const s = e.target.closest('select[data-s]');
+      if (!s) return;
+      const k = s.getAttribute('data-s');
+      let v = s.value;
+      if (k === 's_weeks' || k === 's_min') v = Number(v);
+      dash.setParams({[k]: v === '' ? null : v, s_notes: null});
+    });
+  }
+
+  dash.onData(() => {
+    const c = BT.searchCrit();
+    const p = dash.params();
+    const vals = {s_title: p.s_title || '', s_start: c.start, s_weeks: String(c.n), s_min: String(c.min), s_basis: c.basis};
+    document.querySelectorAll('#search select[data-s]').forEach((s) => {
+      const k = s.getAttribute('data-s');
+      if (k in vals && document.activeElement !== s) s.value = vals[k];
+    });
+    const q = document.getElementById('s-q');
+    if (q && document.activeElement !== q && p.s_q && q.value !== p.s_q) q.value = p.s_q;
+    const none = document.getElementById('s-none'), sum = document.getElementById('s-summary'), tab = document.getElementById('s-table');
+    if (none) none.hidden = c.active;
+    if (sum) sum.hidden = !c.active;
+    if (tab) tab.hidden = !c.active;
+  });
+
+  dash.draw('s-cert-opts', (sel) => {
+    const cur = sp(dash.params().s_cert);
+    const opts = [new Option('Any expertise', '')].concat(CERTS.map((c) => new Option(c, c)));
+    if (cur.length > 1) opts.push(new Option(cur.join(' + '), cur.join('|')));
+    sel.replaceChildren(...opts);
+    sel.value = cur.join('|');
+  });
+
+  const fmtEnd = (iso, n) => BT.fmtW(new Date(+BT.parseW(iso) + (7 * n - 1) * 864e5));
+  const titleLabel = (t) => t.length === 2 ? t[0] + ' (any level)' : t[0];
+  dash.draw('s-crit', (el) => {
+    const c = BT.searchCrit();
+    el.replaceChildren();
+    if (!c.active && !c.notes.length) return;
+    const pill = (t, cls) => { const s = document.createElement('span'); if (cls) s.className = cls; s.textContent = t; el.appendChild(s); };
+    if (c.title.length) pill(titleLabel(c.title));
+    if (c.cert.length) pill(c.cert.join(' + '));
+    pill(c.win.length + (c.win.length === 1 ? ' week' : ' weeks') + ' · ' + BT.fmtW(BT.parseW(c.start)) + ' – ' + fmtEnd(c.start, c.win.length));
+    pill('≥ ' + BT.pct(c.min) + ' free each week');
+    pill(c.office.length || c.bu ? [c.bu].concat(c.office).filter(Boolean).join(' · ') : 'All APAC');
+    if (c.basis === 'confirmed') pill('Confirmed work only');
+    c.notes.forEach((n) => pill(n, 'warn'));
+  });
+
+  const counts = () => { const r = dash.data('staffing').status === 'ok' ? BT.searchResults() : null; return r && r.c.active ? r : null; };
+  dash.draw('s-n-avail', (el) => {
+    if (!BT.status(dash.data('staffing').status, el)) return;
+    const r = counts(); el.textContent = r ? r.list.filter((p) => p.fit === 'avail').length : '—';
+  });
+  dash.draw('s-n-part', (el) => {
+    if (!BT.status(dash.data('staffing').status, el)) return;
+    const r = counts(); el.textContent = r ? r.list.filter((p) => p.fit === 'part').length : '—';
+  });
+  dash.draw('s-window', (el) => {
+    const c = BT.searchCrit();
+    el.textContent = (c.win.length === 1 ? 'the week of ' + BT.fmtW(BT.parseW(c.start)) : c.win.length + ' weeks from ' + BT.fmtW(BT.parseW(c.start)) + ' to ' + fmtEnd(c.start, c.win.length))
+      + ' at ≥ ' + BT.pct(c.min) + ' free each week';
+  });
+
+  const td = (text, cls) => { const c = document.createElement('td'); if (cls) c.className = cls; c.textContent = text; return c; };
+  dash.draw('s-results', (el) => {
+    el.replaceChildren();
+    const s = dash.data('staffing').status;
+    const msg = (t) => { const tr = document.createElement('tr'); const c = td(t, 'bt-sempty'); c.colSpan = 7; tr.appendChild(c); el.appendChild(tr); };
+    if (s !== 'ok') { msg(s === 'error' ? 'Failed to load' : '—'); return; }
+    const r = BT.searchResults();
+    if (!r || !r.c.active) return;
+    if (!r.list.length) { msg('Nobody with that title and expertise in the selected offices. Try "any level", a different expertise, or drop the office.'); return; }
+    let shown = r.list.filter((p) => p.fit !== 'near').slice(0, 20);
+    let near = false;
+    if (!shown.length) { shown = r.list.slice(0, 5); near = true; }
+    shown.forEach((p) => {
+      const tr = document.createElement('tr');
+      const tag = document.createElement('span');
+      tag.className = 'bt-tag ' + p.fit;
+      tag.textContent = p.fit === 'avail' ? 'Available' : p.fit === 'part' ? 'Partly (' + p.met + '/' + p.wk.length + ' wks)' : 'Closest (' + p.met + '/' + p.wk.length + ')';
+      const fit = document.createElement('td'); fit.appendChild(tag);
+      const wkc = document.createElement('td');
+      const box = document.createElement('span'); box.className = 'bt-wk';
+      p.wk.forEach((w) => {
+        const i = document.createElement('i');
+        i.className = (w.ok ? 'ok' : '') + (w.hol ? ' hol' : '');
+        i.textContent = Math.round(w.free) + 'h';
+        const sm = document.createElement('small'); sm.textContent = BT.fmtW(BT.parseW(w.w)); i.appendChild(sm);
+        i.setAttribute('aria-label', BT.fmtW(BT.parseW(w.w)) + ': ' + Math.round(w.free) + ' of ' + w.cap + ' hours free' + (w.ok ? ', meets requirement' : ''));
+        box.appendChild(i);
+      });
+      wkc.appendChild(box);
+      tr.append(td(p.name), fit, td(p.title), td(p.bu + ' · ' + p.office), td(p.certs.join(', '), 'bt-certs'), wkc, td(d3.format('.0f')(p.avg) + ' h', 'num'));
+      el.appendChild(tr);
+    });
+    if (near) msg('No one meets the requirement in at least half the weeks — these are the closest matches. Try a lower "Free each week", a later start, or counting confirmed work only.');
+    else if (r.list.filter((p) => p.fit !== 'near').length > 20) msg('Showing the 20 best matches.');
+  });
+})();
+</script>

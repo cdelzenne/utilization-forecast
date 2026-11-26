@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>APAC Utilization Forecast</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<style>
+/*
+  Standalone preview of dashboard/index.html.
+  The dashboard was written for Claude's dashboard runtime, which supplies the `dash`
+  API, d3 and the design tokens below. This file provides a minimal stand-in for all
+  three so the same page runs from the CSVs in /data on any static host.
+*/
+:root{
+  --color-fg:#141414;--color-fg-muted:#5c5c5c;--color-bg:#ffffff;--color-panel:#fafaf7;--color-border-line:#e3e1da;
+  --color-ok:#1f7a3d;--color-warn:#a15c00;--color-bad:#c4291c;
+  --font-anthropic-sans:"Helvetica Neue",Helvetica,Arial,sans-serif;--font-anthropic-serif:Georgia,serif;
+  --cds-font-size-caption:12px;--cds-font-size-body:15px;--cds-font-size-heading:18px;--cds-font-size-title:28px;--cds-font-weight-medium:500;
+  --cds-gap-xs:4px;--cds-gap-sm:8px;--cds-gap-md:12px;--cds-gap-lg:20px;--cds-gap-xl:32px;
+  --cds-pad-xs:4px;--cds-pad-sm:8px;--cds-pad-md:12px;--cds-pad-lg:18px;--cds-pad-xl:28px;--cds-radius:10px;
+  --cds-chart-muted:#c9c6bd;--cds-chart-status-critical:#c4291c;--cds-chart-grid:#ecebe6;--cds-chart-axis:#cfccc4;--cds-chart-reference:#9a978f;
+  --cds-text-secondary:#5c5c5c;--cds-surface-popover:#ffffff;--cds-border:#e3e1da;--cds-shadow-popover:0 6px 24px rgba(0,0,0,.12);
+  --cds-dur-slow:400ms;--cds-ease-out:cubic-bezier(.2,.8,.2,1);
+}
+@media (prefers-color-scheme:dark){:root{
+  --color-fg:#f2f1ec;--color-fg-muted:#a9a79f;--color-bg:#151514;--color-panel:#1d1d1b;--color-border-line:#33322e;
+  --color-ok:#5cc27e;--color-warn:#e3a44a;--color-bad:#f0645a;
+  --cds-chart-muted:#55534d;--cds-chart-grid:#2a2926;--cds-chart-axis:#45433e;--cds-chart-reference:#7d7b74;
+  --cds-text-secondary:#a9a79f;--cds-surface-popover:#242422;--cds-border:#3a3935;--cds-shadow-popover:0 6px 24px rgba(0,0,0,.5);
+}}
+body{margin:0;background:var(--color-bg);color:var(--color-fg);font-family:var(--font-anthropic-sans)}
+#dash-root{max-width:1200px;margin:0 auto;padding:24px 16px 48px;position:relative}
+.dash-select{font:inherit;font-size:13px;color:var(--color-fg);background-color:var(--color-bg);border:1px solid var(--color-border-line);border-radius:8px;
+  padding:7px 28px 7px 10px;appearance:none;-webkit-appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);
+  background-position:calc(100% - 14px) 50%,calc(100% - 9px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+.dash-skeleton{color:transparent!important;background:var(--color-border-line);border-radius:6px;min-width:3ch}
+.dash-skeleton *{visibility:hidden}
+.preview-banner{max-width:1200px;margin:0 auto;padding:10px 16px 0;font-size:12px;color:var(--color-fg-muted)}
+.preview-error{color:var(--color-bad)}
+</style>
+</head>
+<body>
+<p class="preview-banner">Standalone preview · synthetic sample data · source: <a href="dashboard/index.html">dashboard/index.html</a>, <a href="data/">data/</a></p>
+<div id="dash-root"></div>
+<script>
+(function () {
+  const DATASETS = {staffing: 'data/apac_staffing_forecast.csv', pipeline: 'data/apac_pipeline.csv'};
+  const DEFAULT_PARAMS = {bu: '', office: '', title: '', cert: ''};
+  const root = document.getElementById('dash-root');
+  const state = {};            // id -> {status, data, message}
+  let params = {...DEFAULT_PARAMS};
+  const onDataFns = [];
+  const draws = [];            // [{name, spec}]
+  const mounted = new WeakMap(); // el -> made (for mount/update drawings)
+  let scheduled = false;
+
+  Object.keys(DATASETS).forEach((id) => { state[id] = {status: 'loading', data: [], refreshing: false, meta: []}; });
+
+  function render() {
+    scheduled = false;
+    onDataFns.forEach((fn) => { try { fn(); } catch (e) { console.error(e); } });
+    draws.forEach(({name, spec}) => {
+      root.querySelectorAll('[data-draw="' + name + '"]').forEach((el) => {
+        if (el.closest('[hidden]')) return;
+        try {
+          if (typeof spec === 'function') spec(el);
+          else {
+            if (!mounted.has(el)) { el.replaceChildren(); mounted.set(el, spec.mount ? spec.mount(el) : undefined); }
+            if (spec.update) spec.update(el, mounted.get(el));
+          }
+        } catch (e) { console.error('draw ' + name, e); }
+      });
+    });
+  }
+  const schedule = () => { if (!scheduled) { scheduled = true; requestAnimationFrame(render); } };
+
+  window.dash = {
+    data(id) {
+      const s = state[id] || {status: 'missing', data: [], meta: []};
+      const out = {status: s.status, data: s.data, message: s.message, refreshing: false, meta: s.meta};
+      return out;
+    },
+    onData(fn) { onDataFns.push(fn); try { fn(); } catch (e) { console.error(e); } },
+    draw(name, spec) {
+      const existing = draws.find((d) => d.name === name);
+      if (spec === undefined) { schedule(); return; }
+      if (existing) existing.spec = spec; else draws.push({name, spec});
+    },
+    params() { return {...params}; },
+    setParams(obj) {
+      Object.entries(obj || {}).forEach(([k, v]) => { if (v === null || v === undefined) delete params[k]; else params[k] = v; });
+      schedule();
+    },
+    resetParams() { params = {...DEFAULT_PARAMS}; schedule(); },
+    colors: ['#FFE600', 'var(--color-fg)', '#9a978f', '#5c5c5c'],
+    refresh() { /* static files: nothing to refresh */ },
+    setLink(name) { try { history.replaceState(null, '', '#' + name); } catch (e) {} },
+    calc() {}, loader() {}
+  };
+
+  // Load the dashboard page, then run its scripts in order (scripts set via innerHTML never run).
+  fetch('dashboard/index.html').then((r) => { if (!r.ok) throw new Error(r.status); return r.text(); }).then((html) => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const nodes = Array.from(doc.head.childNodes).concat(Array.from(doc.body.childNodes));
+    const scripts = [];
+    nodes.forEach((n) => {
+      if (n.nodeName === 'SCRIPT') { scripts.push(n.textContent); return; }
+      root.appendChild(document.importNode(n, true));
+    });
+    scripts.forEach((code) => { const s = document.createElement('script'); s.textContent = code; document.body.appendChild(s); });
+    schedule();
+    Object.entries(DATASETS).forEach(([id, url]) => {
+      d3.csv(url).then((rows) => { state[id] = {status: 'ok', data: rows, meta: []}; schedule(); })
+        .catch((e) => { state[id] = {status: 'error', data: [], message: String(e), meta: []}; schedule(); });
+    });
+    let w = root.clientWidth;
+    new ResizeObserver(() => { if (root.clientWidth !== w) { w = root.clientWidth; schedule(); } }).observe(root);
+  }).catch((e) => {
+    const p = document.createElement('p'); p.className = 'preview-error';
+    p.textContent = 'Could not load dashboard/index.html (' + e.message + '). Serve this folder over HTTP, e.g. "python3 -m http.server", rather than opening the file directly.';
+    root.appendChild(p);
+  });
+})();
+</script>
+</body>
+</html>
